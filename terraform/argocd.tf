@@ -2,23 +2,23 @@ locals {
   argocd_values = {
     # Configure repository connection
     configs = {
-    #   credentialTemplates = {
-    #     github-ssh = {
-    #       url           = var.argocd_repository_url
-    #       sshPrivateKey = var.argocd_private_key
-    #     }
-    #   }
-    #   repositories = {
-    #     github = {
-    #       url = var.argocd_repository_url
-    #     }
-    #   }
+      credentialTemplates = {
+        github-ssh = {
+          url           = var.argocd_repository_url
+          sshPrivateKey = var.argocd_private_key
+        }
+      }
+      repositories = {
+        github = {
+          url = var.argocd_repository_url
+        }
+      }
     }
 
     # Configure initial applications list
-    # server = {
-    #   additionalApplications = yamldecode(var.argocd_applications_definition)
-    # }
+    server = {
+      additionalApplications = yamldecode(var.argocd_applications_definition)
+    }
 
     # Configure rbac to enable application CRD sync
     repoServer = {

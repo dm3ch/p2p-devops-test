@@ -18,6 +18,10 @@ variable "subnetwork_name" {
   description = "The network name"
 }
 
+variable "docker_repository_name" {
+  description = "The name of artifacts repository containing docker images"
+}
+
 variable "project_id" {
   description = "The project ID to host the cluster in"
 }
@@ -40,4 +44,20 @@ variable "ip_range_nodes" {
 
 variable "argocd_version" {
     description = "Version of Argo CD to install"
+}
+
+variable "argocd_repository_url" {
+    description = "Repository that would be used by ArgoCD as a source in SSH format"
+}
+
+variable "argocd_repository" {
+    description = "Repository that would be used by ArgoCD in github org/repo_name format, would be used in OIDC claims"
+}
+
+variable "argocd_private_key" {
+    description = "SSH key that would be used by ArgoCD to access source repository"
+}
+
+variable "argocd_applications_definition" {
+    description = "ArgoCD applications deffinition"
 }
