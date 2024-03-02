@@ -37,3 +37,7 @@ variable "ip_range_services" {
 variable "ip_range_nodes" {
   description = "The subnetwork ip range to use for nodes"
 }
+
+variable "argocd_version" {
+    description = "Version of Argo CD to install"
+}
