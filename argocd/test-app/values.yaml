@@ -1,5 +1,5 @@
 image:
-  repository: ghcr.io/dm3ch/p2p-devops-test
+  repository: urope-west1-docker.pkg.dev/earnest-reactor-416012/docker-repository/test-app
   pullPolicy: IfNotPresent
   # tag: main # Tag definition moved to separate version.yaml to prevent deletion of comments during the patch
 
