@@ -17,7 +17,7 @@ resources:
 ingress:
   enabled: false
 
-# Tune port to be the same as app listens 
+# Tune port to be the same as app listens
 service:
   type: LoadBalancer
   port: 3000
@@ -42,17 +42,13 @@ readinessProbe:
 affinity:
   podAntiAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
-    # Affinity rule to require pods of same app to be placed on different nodes to prevent outage on node outage
-    - weight: 1
-      podAffinityTerm:
-        labelSelector:
+      # Affinity rule to require pods of same app to be placed on different nodes to prevent outage on node outage
+      - labelSelector:
           matchLabels:
             app.kubernetes.io/name: test-app
         topologyKey: kubernetes.io/hostname
-    # Affinity rule to require pods of same app to be placed on different zones to prevent outage on GCE zone outage
-    - weight: 1
-      podAffinityTerm:
-        labelSelector:
+      # Affinity rule to require pods of same app to be placed on different zones to prevent outage on GCE zone outage
+      - labelSelector:
           matchLabels:
             app.kubernetes.io/name: test-app
         topologyKey: topology.kubernetes.io/zone
