@@ -1,0 +1,63 @@
+image:
+  repository: ghcr.io/dm3ch/p2p-devops-test
+  pullPolicy: IfNotPresent
+  # tag: main # Tag definition moved to separate version.yaml to prevent deletion of comments during the patch
+
+# Just some random resources that should be enough for this application
+# I haven't used app enough to figure out values that would fit the best way
+# But to demonstrate that resources are one of essential settings I added at least some random numbers
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 10m
+    memory: 64Mi
+
+ingress:
+  enabled: true
+  className: "nginx"
+  hosts:
+    - paths:
+        - path: /
+          pathType: Prefix
+
+# Tune port to be the same as app listens 
+service:
+  type: ClusterIP
+  port: 3000
+
+# Enable autoscaling, assuming that CPU would be the factor limiting app bandwith
+autoscaling:
+  enabled: true
+  targetCPUUtilizationPercentage: 80
+  minReplicas: 2 # Min replicas to be fault tolerant for node outage
+  maxReplicas: 10
+
+# Configure app probes, cause there's no separate endpoint for this, using main endpoint
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    # Affinity rule to require pods of same app to be placed on different nodes to prevent outage on node outage
+    - weight: 1
+      podAffinityTerm:
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: test-app
+        topologyKey: kubernetes.io/hostname
+    # Affinity rule to require pods of same app to be placed on different zones to prevent outage on GCE zone outage
+    - weight: 1
+      podAffinityTerm:
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: test-app
+        topologyKey: topology.kubernetes.io/zone

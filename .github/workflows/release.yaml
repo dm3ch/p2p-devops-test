@@ -52,19 +52,19 @@ jobs:
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
 
-  # patch-values:
-  #   name: Patch values with new tag
-  #   needs: docker-build-and-publish
-  #   if: github.ref == 'refs/heads/master'
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Update values.yaml
-  #       uses: fjogeleit/yaml-update-action@master
-  #       with:
-  #         valueFile: 'argocd/test-app/version.yaml'
-  #         propertyPath: 'image.tag'
-  #         value: ${{ github.sha }}
-  #         branch: master
-  #         createPR: false
-  #         message: 'Update test-app image Version to ${{ github.sha }}'
+  patch-values:
+    name: Patch values with new tag
+    needs: docker-build-and-publish
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update values.yaml
+        uses: fjogeleit/yaml-update-action@master
+        with:
+          valueFile: 'argocd/test-app/version.yaml'
+          propertyPath: 'image.tag'
+          value: sha-${{ github.sha }}
+          branch: master
+          createPR: false
+          message: 'Update test-app image Version to ${{ github.sha }}'

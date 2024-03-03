@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: test-app
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  destination:
+    namespace: test-app
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: helm-charts/test-app
+    repoURL: git@github.com:naviteq/lab-work-dmitry-chepurosvky.git
+    targetRevision: main
+    helm:
+      valueFiles:
+      - /argocd/test-app/values.yaml
+      - /argocd/test-app/version.yaml
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
