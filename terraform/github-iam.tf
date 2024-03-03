@@ -17,29 +17,9 @@ resource "google_iam_workload_identity_pool_provider" "github-oidc-provider" {
   }
 }
 
-resource "google_service_account" "github-actions" {
-  account_id   = "github-actions"
-  display_name = "Github Actions"
-}
-
 resource "google_artifact_registry_repository_iam_member" "github-actions-docker-image-write" {
   location      = var.region
   repository = google_artifact_registry_repository.docker_repository.id
   role = "roles/artifactregistry.writer"
-  member = "serviceAccount:${google_service_account.github-actions.email}"
-}
-
-resource "google_service_account_iam_binding" "github-actions" {
-  service_account_id = google_service_account.github-actions.id
-  role               = "roles/iam.workloadIdentityUser"
-
-  members = [
-    "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.identity-pool.name}/attribute.repository/${var.argocd_repository}",
-  ]
-}
-
-resource "google_project_iam_member" "test" {
-  project = var.project_id
-  role    = "roles/compute.viewer"
-  member  = "serviceAccount:${google_service_account.github-actions.email}"
+  member = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.identity-pool.name}/attribute.repository/${var.argocd_repository}"
 }

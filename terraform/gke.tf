@@ -11,3 +11,10 @@ module "gke" {
   ip_range_pods               = "${var.cluster_name}-pods-cidr"
   ip_range_services           = "${var.cluster_name}-services-cidr"
 }
+
+resource "google_artifact_registry_repository_iam_member" "gke-pull-docker" {
+  location      = var.region
+  repository = google_artifact_registry_repository.docker_repository.id
+  role = "roles/artifactregistry.reader"
+  member = "serviceAccount:${module.gke.service_account}"
+}
