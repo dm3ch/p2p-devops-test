@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bar-app
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  destination:
+    namespace: bar-app
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: helm-charts/bar-app
+    repoURL: git@github.com:dm3ch/p2p-devops-bar.git
+    targetRevision: master
+    helm:
+      valueFiles:
+      - /argocd/bar-app/values.yaml
+      - /argocd/bar-app/version.yaml
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
