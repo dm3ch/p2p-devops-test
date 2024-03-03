@@ -13,13 +13,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: helm-charts/bar-app
-    repoURL: git@github.com:dm3ch/p2p-devops-bar.git
+    path: argocd/bar-app
+    repoURL: git@github.com:dm3ch/p2p-devops-test.git
     targetRevision: master
-    helm:
-      valueFiles:
-      - /argocd/bar-app/values.yaml
-      - /argocd/bar-app/version.yaml
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
