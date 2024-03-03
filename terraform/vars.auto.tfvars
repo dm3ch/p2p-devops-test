@@ -18,15 +18,7 @@ argocd_apps_chart_version = "1.6.2"
 
 argocd_repository_url = "git@github.com:dm3ch/p2p-devops-test.git"
 argocd_repository = "dm3ch/p2p-devops-test"
-argocd_private_key = <<EOF
------BEGIN OPENSSH PRIVATE KEY-----
-b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
-QyNTUxOQAAACBaJt/inREf9/KHHY1g64NsklfQjEnomlRU7/HQOgSY/AAAAKAnR4flJ0eH
-5QAAAAtzc2gtZWQyNTUxOQAAACBaJt/inREf9/KHHY1g64NsklfQjEnomlRU7/HQOgSY/A
-AAAECci6H8KM4yIE2Xtdn0SqzHeOFfOSk7NrKbUpgGnadOd1om3+KdER/38ocdjWDrg2yS
-V9CMSeiaVFTv8dA6BJj8AAAAHWRtM2NoQERtM0NoLU1hY0Jvb2stUHJvLmxvY2Fs
------END OPENSSH PRIVATE KEY-----
-EOF
+
 argocd_applications_definition = <<EOF
 - name: apps
   namespace: argocd

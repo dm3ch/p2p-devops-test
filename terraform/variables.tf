@@ -58,10 +58,6 @@ variable "argocd_repository" {
     description = "Repository that would be used by ArgoCD in github org/repo_name format, would be used in OIDC claims"
 }
 
-variable "argocd_private_key" {
-    description = "SSH key that would be used by ArgoCD to access source repository"
-}
-
 variable "argocd_applications_definition" {
     description = "ArgoCD applications deffinition"
 }

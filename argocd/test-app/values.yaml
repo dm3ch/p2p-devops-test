@@ -15,16 +15,11 @@ resources:
     memory: 64Mi
 
 ingress:
-  enabled: true
-  className: "nginx"
-  hosts:
-    - paths:
-        - path: /
-          pathType: Prefix
+  enabled: false
 
 # Tune port to be the same as app listens 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 3000
 
 # Enable autoscaling, assuming that CPU would be the factor limiting app bandwith

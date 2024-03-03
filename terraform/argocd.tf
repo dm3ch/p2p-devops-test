@@ -2,12 +2,6 @@ locals {
   argocd_values = {
     # Configure repository connection
     configs = {
-      credentialTemplates = {
-        github-ssh = {
-          url           = var.argocd_repository_url
-          sshPrivateKey = var.argocd_private_key
-        }
-      }
       repositories = {
         github = {
           url = var.argocd_repository_url
