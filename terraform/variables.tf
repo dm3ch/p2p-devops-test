@@ -42,8 +42,12 @@ variable "ip_range_nodes" {
   description = "The subnetwork ip range to use for nodes"
 }
 
-variable "argocd_version" {
-    description = "Version of Argo CD to install"
+variable "argocd_chart_version" {
+    description = "Version of Argo CD chart to install"
+}
+
+variable "argocd_apps_chart_version" {
+    description = "Version of ArgoCD-Apps chart to install"
 }
 
 variable "argocd_repository_url" {

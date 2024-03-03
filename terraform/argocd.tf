@@ -15,11 +15,6 @@ locals {
       }
     }
 
-    # Configure initial applications list
-    server = {
-      additionalApplications = yamldecode(var.argocd_applications_definition)
-    }
-
     # Configure rbac to enable application CRD sync
     repoServer = {
       rbac = [{
@@ -49,7 +44,23 @@ resource "helm_release" "argocd" {
 
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argo-cd"
-  version    = var.argocd_version
+  version    = var.argocd_chart_version
 
   values = [yamlencode(local.argocd_values)]
+}
+
+resource "helm_release" "argocd-apps" {
+  name             = "argocd-apps"
+  namespace        = "argocd"
+  create_namespace = true
+
+  repository = "https://argoproj.github.io/argo-helm"
+  chart      = "argocd-apps"
+  version    = var.argocd_apps_chart_version
+
+  values = [yamlencode({
+    applications = yamldecode(var.argocd_applications_definition)
+  })]
+
+  depends_on = [ helm_release.argocd ]
 }

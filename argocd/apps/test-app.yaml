@@ -14,8 +14,8 @@ spec:
   project: default
   source:
     path: helm-charts/test-app
-    repoURL: git@github.com:naviteq/lab-work-dmitry-chepurosvky.git
-    targetRevision: main
+    repoURL: git@github.com:dm3ch/p2p-devops-test.git
+    targetRevision: master
     helm:
       valueFiles:
       - /argocd/test-app/values.yaml

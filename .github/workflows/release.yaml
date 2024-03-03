@@ -36,8 +36,7 @@ jobs:
       with:
         images: europe-west1-docker.pkg.dev/earnest-reactor-416012/docker-repository/test-app
         tags: |
-          type=sha
-          type=raw,value={{branch}}-{{sha}}-{{date 'X'}},enable=${{ startsWith(github.ref, 'refs/heads') }}
+          type=sha,format=long
           type=raw,value={{branch}},enable=${{ startsWith(github.ref, 'refs/heads') }}
           type=raw,value=latest,enable={{is_default_branch}}
 
